@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import { TodoComponent } from './todo/todo.component';
+import { Todo } from './todo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoDataService {
 
-  lastId: number = 0;
+  lastId: number;
 
-  todos: TodoComponent[] = [];
+  todos: Todo[] = [];
 
-  addTodo(todo: TodoComponent): TodoDataService {
+  addTodo(todo: Todo): void {
     if (!todo.id) {
       todo.id = ++this.lastId;
     }
     this.todos.push(todo);
   }
 
-  deleteTodo(id: number): TodoDataService {
+  deleteTodo(id: number): void {
     this.todos = this.todos.filter(todo => todo.id !== id);
   }
 
-  getTodoById(id: number): TodoComponent {
+  getTodoById(id: number): Todo {
     return this.todos.filter(todo => todo.id === id).pop();
   }
-  updateTodoById(id: number, value: Object = { }): TodoComponent {
+  updateTodoById(id: number, value: Object = { }): Todo {
     let todo = this.getTodoById(id);
     if (!todo) {
       return null;
@@ -32,15 +32,17 @@ export class TodoDataService {
     Object.assign(todo, value);
   }
 
-  getAllTodos(): TodoComponent[] {
+  getAllTodos(): Todo[] {
     return this.todos;
   }
 
-  toggleTodoComplete(todo: TodoComponent): TodoComponent {
+  toggleTodoComplete(todo: Todo): Todo {
     let updateTodo = this.updateTodoById(todo.id, {
       complete: !todo.complete
     });
     return updateTodo;
   }
-  constructor() { }
+  constructor() {
+    this.lastId = 0;
+  }
 }
