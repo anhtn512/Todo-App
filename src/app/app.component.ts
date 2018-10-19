@@ -15,8 +15,11 @@ export class AppComponent {
   }
 
   addTodo() {
-    this.todoDataService.addTodo(this.newTodo);
-    this.newTodo = new Todo();
+    this.newTodo.title = this.newTodo.title.trim();
+    if (this.newTodo.title.length >= 3) {
+      this.todoDataService.addTodo(this.newTodo);
+      this.newTodo = new Todo();
+    }
   }
 
   toggleTodoComplete(todo) {
@@ -27,7 +30,19 @@ export class AppComponent {
     this.todoDataService.deleteTodo(todo.id);
   }
 
+  removeTodosComplete() {
+    this.todoDataService.deleteTodoComplete();
+  }
+
   get todos() {
     return this.todoDataService.getAllTodos();
+  }
+
+  get todosComplete() {
+    return this.todos.filter(todo => todo.complete);
+  }
+
+  get todosIncomplete() {
+    return this.todos.filter(todo => !todo.complete);
   }
 }

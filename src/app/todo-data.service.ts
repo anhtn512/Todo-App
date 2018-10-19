@@ -27,6 +27,11 @@ export class TodoDataService {
     this.updateToLocalStorage();
   }
 
+  deleteTodoComplete(): void {
+    this.todos = this.todos.filter(todo => !todo.complete);
+    this.updateToLocalStorage();
+  }
+
   getTodoById(id: number): Todo {
     return this.todos.filter(todo => todo.id === id).pop();
   }

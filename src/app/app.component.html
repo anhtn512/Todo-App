@@ -1,20 +1,49 @@
 <section class="todoapp">
-  <header class="header">
-    <h1>Todos</h1>
-    <input type="text" class="new-todo" placeholder="What needs to be done?" autofocus="" [(ngModel)]="newTodo.title" (keyup.enter)="addTodo()">
-  </header>
-  <section class="main" *ngIf="todos.length > 0">
-    <ul class="todo-list">
-      <li *ngFor="let todo of todos" [class.complete]="todo.complete">
-        <div class="view">
-          <input type="checkbox" class="toggle" (click)="toggleTodoComplete(todo)" [checked]="todo.complete">
-          <label>{{todo.title}}</label>
-          <button class="destroy" (click)="removeTodo(todo)"></button>
+  <div>
+    <h1 class="text-center text--white">Todo</h1>
+    <ul class="list-group task-container">
+      <li class="list-group-item">
+        <form action="" style="margin-bottom:0;" (ngSubmit)="addTodo()">
+          <div class="input-group">
+            <label for="taskinput" class="sr-only">Task Title</label>
+            <input type="text" class="form-control" name="taskinput" id="taskinput" placeholder="Create Some Tasks ..." autocomplete="off" [(ngModel)]="newTodo.title"
+            (keyup.enter)="addTodo()">
+            <span class="input-group-btn">
+              <label for="submit" class="sr-only">Submit</label>
+              <button id="submit" class="btn btn-primary"><span class="fa fa-plus"></span></button>
+            </span>
+          </div>
+        </form>
+      </li>
+
+      <!-- TASK COUNTERS -->
+      <li class="list-group-item task-transition"  *ngIf="todos.length > 0">
+        <span class="label label-info" style="margin-right:10px">All Tasks : {{todos.length}}</span> 
+        <span class="label label-danger" style="margin-right:10px">Incomplete : {{todosIncomplete.length}}</span>  
+        <span class="label label-success" style="margin-right:10px">Complete : {{todosComplete.length}}</span>
+      </li>
+
+      <!-- INCOMPLETE TASKS  -->
+      <li class="list-group-item task task-transition" *ngFor="let todo of todosIncomplete">
+        <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
+        {{todo.title}}
+        <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
+      </li>
+      <!-- COMPLETE TASKS  -->
+      <li class="list-group-item task task-transition task-complete" *ngFor="let todo of todosComplete">
+        <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
+        {{todo.title}}
+        <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
+      </li>
+      <!-- Clear Tasks Filters -->
+      <li class="list-group-item" *ngIf="todosComplete.length > 0">
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-block btn-default btn-lg btn-clear" (click)="removeTodosComplete()">Clear
+              Completed Tasks</button>
+          </div>
         </div>
       </li>
     </ul>
-  </section>
-  <footer class="footer" *ngIf="todos.length > 0">
-    <span><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
-  </footer>
+  </div>
 </section>
