@@ -36,13 +36,13 @@ export class TodoDataService {
     return this.todos.filter(todo => todo.id === id).pop();
   }
 
-  updateTodoById(id: number, value: Object = { }): Todo {
-    let todo = this.getTodoById(id);
+  updateTodoById(todo: Todo, value: Object = { }): Todo {
+    let updateTodo = this.getTodoById(todo.id);
     if (!todo) {
       return null;
     }
-    Object.assign(todo, value);
-    this.updateToLocalStorage();
+    Object.assign(updateTodo, value);
+    return updateTodo;
   }
 
   getAllTodos(): Todo[] {
@@ -50,7 +50,7 @@ export class TodoDataService {
   }
 
   toggleTodoComplete(todo: Todo): Todo {
-    let updateTodo = this.updateTodoById(todo.id, {
+    let updateTodo = this.updateTodoById(todo, {
       complete: !todo.complete
     });
     this.updateToLocalStorage();
