@@ -73,6 +73,7 @@ export class TodoDataService {
       // console.log(temp.map(item => new Todo(item)));
     } else {
       this.todos = [];
+      this.updateToLocalStorage();
     }
   }
 }
