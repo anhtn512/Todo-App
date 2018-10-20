@@ -35,6 +35,7 @@ export class AppComponent {
     this.toastr.info('Change state of task done!', 'Info', {
       timeOut: 3000
     });
+    // console.log(this.todos);
   }
 
   removeTodo(todo) {

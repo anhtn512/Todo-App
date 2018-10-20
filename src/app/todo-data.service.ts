@@ -8,7 +8,7 @@ export class TodoDataService {
 
   lastId: number;
 
-  todos: Todo[] = JSON.parse(localStorage.getItem('todos')) || [];
+  todos: Todo[];
 
   updateToLocalStorage(): void {
     localStorage.setItem('todos', JSON.stringify(this.todos));
@@ -58,5 +58,21 @@ export class TodoDataService {
   }
   constructor() {
     this.lastId = 0;
+    let temp = JSON.parse(localStorage.getItem('todos'));
+    if (temp != null) {
+      this.todos = temp.map(item => new Todo(item));
+      // console.log(temp.map(item => new Todo(item)));
+    }
+    window.addEventListener('storage', this.syncLocalstorage);
+  }
+
+  syncLocalstorage = (event: StorageEvent): void => {
+    let temp = JSON.parse(localStorage.getItem('todos'));
+    if (temp != null) {
+      this.todos = temp.map(item => new Todo(item));
+      // console.log(temp.map(item => new Todo(item)));
+    } else {
+      this.todos = [];
+    }
   }
 }
