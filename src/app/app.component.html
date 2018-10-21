@@ -17,26 +17,31 @@
       </li>
 
       <!-- TASK COUNTERS -->
-      <li class="list-group-item task-transition" *ngIf="todos.length > 0">
+      <li class="list-group-item task-transition" @onOffTaskTransition *ngIf="todos.length > 0">
         <span class="label label-info" style="margin-right:10px">All Tasks : {{todos.length}}</span>
         <span class="label label-danger" style="margin-right:10px">Incomplete : {{todosIncomplete.length}}</span>
         <span class="label label-success" style="margin-right:10px">Complete : {{todosComplete.length}}</span>
       </li>
 
       <!-- INCOMPLETE TASKS  -->
-      <li class="list-group-item task task-transition" [class.task-complete]="todo.complete" *ngFor="let todo of todosIncomplete">
-        <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
-        {{todo.title}}
-        <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
-      </li>
+      <ng-container *ngFor="let todo of todos" >
+        <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete" *ngIf="!todo.complete">
+          <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
+          {{todo.title}}
+          <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
+        </li>
+      </ng-container>
+      
       <!-- COMPLETE TASKS  -->
-      <li class="list-group-item task task-transition" [class.task-complete]="todo.complete" *ngFor="let todo of todosComplete">
-        <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
-        {{todo.title}}
-        <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
-      </li>
+      <ng-container *ngFor="let todo of todos" >
+        <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete" *ngIf="todo.complete">
+          <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
+          {{todo.title}}
+          <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
+        </li>
+      </ng-container>
       <!-- Clear Tasks Filters -->
-      <li class="list-group-item" *ngIf="todosComplete.length > 0">
+      <li class="list-group-item" @onOffTaskTransition *ngIf="todosComplete.length > 0">
         <div class="row">
           <div class="col-xs-12">
             <button class="btn btn-block btn-default btn-lg btn-clear" (click)="removeTodosComplete()">Clear

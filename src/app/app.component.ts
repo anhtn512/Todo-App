@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { Todo } from './todo';
 import { TodoDataService } from './todo-data.service';
 import { ToastrService } from 'ngx-toastr';
+import { ON_OFF_TASK_TRANSITION } from './animations/taskanimation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [ON_OFF_TASK_TRANSITION]
 })
 export class AppComponent {
 
