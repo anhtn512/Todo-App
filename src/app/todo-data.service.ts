@@ -6,8 +6,6 @@ import { Todo } from './todo';
 })
 export class TodoDataService {
 
-  lastId: number;
-
   todos: Todo[];
 
   updateToLocalStorage(): void {
@@ -16,7 +14,7 @@ export class TodoDataService {
 
   addTodo(todo: Todo): void {
     if (!todo.id) {
-      todo.id = ++this.lastId;
+      todo.id = new Date().getTime();
     }
     this.todos.push(todo);
     this.updateToLocalStorage();
@@ -57,7 +55,6 @@ export class TodoDataService {
     return updateTodo;
   }
   constructor() {
-    this.lastId = 0;
     let temp = JSON.parse(localStorage.getItem('todos'));
     if (temp != null) {
       this.todos = temp.map(item => new Todo(item));

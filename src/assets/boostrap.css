@@ -1161,7 +1161,7 @@ h1, .h1,
 h2, .h2,
 h3, .h3 {
   margin-top: 20px;
-  margin-bottom: 10px; }
+  margin-bottom: 20px; }
   h1 small,
   h1 .small, .h1 small,
   .h1 .small,
@@ -7937,8 +7937,9 @@ html {
 body {
   padding-top: 100px;
   min-height: 100vh;
-  background: -webkit-linear-gradient(top, #455EFE 40%, #3849AC 40%);
-  background: linear-gradient(to bottom, #455EFE 40%, #3849AC 40%); }
+  /* background: -webkit-linear-gradient(top, #455EFE 40%, #3849AC 40%);
+  background: linear-gradient(to bottom, #455EFE 40%, #3849AC 40%);  */
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Roboto", "Helvetica Neue", "Helvetica", sans-serif; }
