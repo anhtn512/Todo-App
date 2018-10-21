@@ -59,6 +59,8 @@ export class TodoDataService {
     if (temp != null) {
       this.todos = temp.map(item => new Todo(item));
       // console.log(temp.map(item => new Todo(item)));
+    } else {
+      this.todos = [];
     }
     window.addEventListener('storage', this.syncLocalstorage);
   }
