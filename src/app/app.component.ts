@@ -54,6 +54,10 @@ export class AppComponent {
     });
   }
 
+  capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
   get todos() {
     return this.todoDataService.getAllTodos();
   }

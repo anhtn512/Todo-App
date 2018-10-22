@@ -27,7 +27,7 @@
       <ng-container *ngFor="let todo of todos" >
         <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete" *ngIf="!todo.complete">
           <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
-          {{todo.title}}
+          {{capitalize(todo.title)}}
           <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
         </li>
       </ng-container>
