@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from './todo';
 import { TodoDataService } from './todo-data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ON_OFF_TASK_TRANSITION } from './animations/taskanimation';
 import { FirebaseDataService } from './firebase-data.service';
+import { TodoUser } from './todouser';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,22 @@ import { FirebaseDataService } from './firebase-data.service';
   styleUrls: ['./app.component.css'],
   animations: [ON_OFF_TASK_TRANSITION]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   newTodo: Todo = new Todo();
+  todoUser: TodoUser;
+  constructor(private todoDataService: TodoDataService,
+              private firebaseDataServie: FirebaseDataService,
+              private toastr: ToastrService) {  }
 
-  constructor(private todoDataService: TodoDataService, private firebaseDataServie: FirebaseDataService, private toastr: ToastrService) {  }
+  ngOnInit() {
+    this.firebaseDataServie.todoUser.subscribe(
+      (updateTodos2) => {
+        this.todoUser = updateTodos2;
+        console.log(updateTodos2);
+      }
+    );
+  }
 
   addTodo() {
     this.newTodo.title = this.newTodo.title.trim();

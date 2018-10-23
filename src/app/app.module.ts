@@ -11,6 +11,7 @@ import { TodoDataService } from './todo-data.service';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FirebaseDataService } from './firebase-data.service';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FirebaseDataService } from './firebase-data.service';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [
     TodoDataService,

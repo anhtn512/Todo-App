@@ -3,16 +3,23 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
-
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Todo } from './todo';
+import { TodoUser } from './todouser';
 @Injectable({
   providedIn: 'root'
 })
+
 export class FirebaseDataService {
 
   private user: Observable<firebase.User>;
-  private userDetails: firebase.User = null;
+  userDetails: firebase.User = null;
 
-  constructor(private _firebaseAuth: AngularFireAuth) {
+  todoCol: AngularFirestoreCollection<Todo>;
+  todoUser: Observable<TodoUser>;
+  constructor(private _firebaseAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = _firebaseAuth.authState;
     this.user.subscribe(
       (user) => {
@@ -24,6 +31,14 @@ export class FirebaseDataService {
         }
       }
     );
+    this.todoUser = this._firebaseAuth.authState.pipe(switchMap(user => {
+      if (user) {
+        this.userDetails = user;
+        return this.afs.doc<TodoUser>(`todoapp/${user.email}`).valueChanges();
+      } else {
+        return of(null);
+      }
+    }));
   }
 
   signInWithGoogle() {
@@ -41,5 +56,14 @@ export class FirebaseDataService {
   }
   logout() {
     this._firebaseAuth.auth.signOut();
+  }
+
+  updateNewUser(user) {
+    const newUser = this.afs.doc<TodoUser>(`todoapp/${user.email}`);
+    const data: TodoUser = {
+        email: user.email,
+        todos: []
+    };
+    return newUser.set(data);
   }
 }
