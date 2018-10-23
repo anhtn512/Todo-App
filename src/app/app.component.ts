@@ -3,6 +3,7 @@ import { Todo } from './todo';
 import { TodoDataService } from './todo-data.service';
 import { ToastrService } from 'ngx-toastr';
 import { ON_OFF_TASK_TRANSITION } from './animations/taskanimation';
+import { FirebaseDataService } from './firebase-data.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
 
   newTodo: Todo = new Todo();
 
-  constructor(private todoDataService: TodoDataService, private toastr: ToastrService) {  }
+  constructor(private todoDataService: TodoDataService, private firebaseDataServie: FirebaseDataService, private toastr: ToastrService) {  }
 
   addTodo() {
     this.newTodo.title = this.newTodo.title.trim();

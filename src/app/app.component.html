@@ -1,4 +1,16 @@
 <section class="todoapp" @onOffTodoApp>
+  <div class="form-group" *ngIf="!firebaseDataServie.isLoggedIn()">
+    <button type="button" class="btn btn-block" (click)="firebaseDataServie.signInWithGoogle()">
+      <i class="fa fa-google" aria-hidden="true"></i>
+      Login with Google
+    </button>
+  </div>
+  <div class="form-group" *ngIf="firebaseDataServie.isLoggedIn()">
+    <button type="button" class="btn btn-block" (click)="firebaseDataServie.logout()">
+      <i class="fa fa-google" aria-hidden="true"></i>
+      Logout google
+    </button>
+  </div>
   <div>
     <h1 class="text-center text--white">My Todos</h1>
     <ul class="list-group task-container">
@@ -24,17 +36,19 @@
       </li>
 
       <!-- INCOMPLETE TASKS  -->
-      <ng-container *ngFor="let todo of todos" >
-        <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete" *ngIf="!todo.complete">
+      <ng-container *ngFor="let todo of todos">
+        <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete"
+          *ngIf="!todo.complete">
           <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
           {{capitalize(todo.title)}}
           <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
         </li>
       </ng-container>
-      
+
       <!-- COMPLETE TASKS  -->
-      <ng-container *ngFor="let todo of todos" >
-        <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete" *ngIf="todo.complete">
+      <ng-container *ngFor="let todo of todos">
+        <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete"
+          *ngIf="todo.complete">
           <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
           {{todo.title}}
           <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>

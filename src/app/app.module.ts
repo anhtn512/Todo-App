@@ -5,8 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
-// import { Todo } from './todo';
 import { TodoDataService } from './todo-data.service';
+
+// Firebase
+import { environment } from '../environments/environment';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { FirebaseDataService } from './firebase-data.service';
 
 @NgModule({
   declarations: [
@@ -16,10 +21,13 @@ import { TodoDataService } from './todo-data.service';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
+    AngularFireAuthModule
   ],
   providers: [
-    TodoDataService
+    TodoDataService,
+    FirebaseDataService
   ],
   bootstrap: [AppComponent]
 })
