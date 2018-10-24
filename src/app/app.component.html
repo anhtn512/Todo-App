@@ -8,7 +8,7 @@
     </div>
   </div>
 </div>
-<section class="todoapp" @moveIn *ngIf="firebaseDataServie.isLoggedIn()">
+<section class="todoapp" @onOffTodoApp *ngIf="firebaseDataServie.isLoggedIn()">
   <div>
     <h1 class="text-center text--white">My Todos</h1>
     <ul class="list-group task-container">
