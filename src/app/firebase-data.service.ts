@@ -25,11 +25,12 @@ export class FirebaseDataService {
         if (user) {
           this.userDetails = user;
           console.log(this.userDetails);
-          this.afs.collection('todoapp', ref => ref.where('email', '==', this.userDetails.email)).snapshotChanges().subscribe(
+          this.afs.collection('todoapp', ref => ref.where('uid', '==', this.userDetails.uid)).snapshotChanges().subscribe(
             res => {
               if (!(res.length > 0)) {
-                const newUser = this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`);
+                const newUser = this.afs.doc<TodoUser>(`todoapp/${this.userDetails.uid}`);
                 const data: TodoUser = {
+                  uid: this.userDetails.uid,
                   email: this.userDetails.email,
                   todos: []
                 };
@@ -44,7 +45,7 @@ export class FirebaseDataService {
     );
     this.todoUserObs = this._firebaseAuth.authState.pipe(switchMap(user => {
       if (user) {
-        return this.afs.doc<TodoUser>(`todoapp/${user.email}`).valueChanges();
+        return this.afs.doc<TodoUser>(`todoapp/${user.uid}`).valueChanges();
       } else {
         return of(null);
       }
@@ -52,7 +53,6 @@ export class FirebaseDataService {
     this.todoUserObs.subscribe(
       (updateTodoUser) => {
         this.todoUser = updateTodoUser;
-        console.log(this.todoUser);
       }
     );
   }
@@ -81,18 +81,17 @@ export class FirebaseDataService {
       todo.id = new Date().getTime();
     }
     this.todoUser.todos.push(todo);
-    console.log(this.todoUser);
-    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.uid}`).update(this.todoUser);
   }
 
   deleteTodo(id: number): void {
     this.todoUser.todos = this.todoUser.todos.filter(todo => todo.id !== id);
-    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.uid}`).update(this.todoUser);
   }
 
   deleteTodoComplete(): void {
     this.todoUser.todos = this.todoUser.todos.filter(todo => !todo.complete);
-    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.uid}`).update(this.todoUser);
   }
 
   getTodoById(id: number): Todo {
@@ -116,7 +115,7 @@ export class FirebaseDataService {
     let updateTodo = this.updateTodoById(todo, {
       complete: !todo.complete
     });
-    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.uid}`).update(this.todoUser);
     return updateTodo;
   }
 

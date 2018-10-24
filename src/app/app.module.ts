@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
-// import { TodoDataService } from './todo-data.service';
 
 // Firebase
 import { environment } from '../environments/environment';
@@ -28,7 +27,6 @@ import { FirebaseDataService } from './firebase-data.service';
     AngularFirestoreModule
   ],
   providers: [
-    // TodoDataService,
     FirebaseDataService
   ],
   bootstrap: [AppComponent]
