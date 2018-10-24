@@ -16,9 +16,8 @@ export class FirebaseDataService {
 
   private user: Observable<firebase.User>;
   userDetails: firebase.User = null;
-
-  todoCol: AngularFirestoreCollection<Todo>;
-  todoUser: Observable<TodoUser>;
+  todoUserObs: Observable<TodoUser>;
+  todoUser: TodoUser;
   constructor(private _firebaseAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = _firebaseAuth.authState;
     this.user.subscribe(
@@ -43,14 +42,19 @@ export class FirebaseDataService {
         }
       }
     );
-    this.todoUser = this._firebaseAuth.authState.pipe(switchMap(user => {
+    this.todoUserObs = this._firebaseAuth.authState.pipe(switchMap(user => {
       if (user) {
-        this.userDetails = user;
         return this.afs.doc<TodoUser>(`todoapp/${user.email}`).valueChanges();
       } else {
         return of(null);
       }
     }));
+    this.todoUserObs.subscribe(
+      (updateTodoUser) => {
+        this.todoUser = updateTodoUser;
+        console.log(this.todoUser);
+      }
+    );
   }
 
   signInWithGoogle() {
@@ -68,6 +72,52 @@ export class FirebaseDataService {
   }
   logout() {
     this._firebaseAuth.auth.signOut();
+  }
+
+
+
+  addTodo(todo: Todo): void {
+    if (!todo.id) {
+      todo.id = new Date().getTime();
+    }
+    this.todoUser.todos.push(todo);
+    console.log(this.todoUser);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+  }
+
+  deleteTodo(id: number): void {
+    this.todoUser.todos = this.todoUser.todos.filter(todo => todo.id !== id);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+  }
+
+  deleteTodoComplete(): void {
+    this.todoUser.todos = this.todoUser.todos.filter(todo => !todo.complete);
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+  }
+
+  getTodoById(id: number): Todo {
+    return this.todoUser.todos.filter(todo => todo.id === id).pop();
+  }
+
+  updateTodoById(todo: Todo, value: Object = { }): Todo {
+    let updateTodo = this.getTodoById(todo.id);
+    if (!todo) {
+      return null;
+    }
+    Object.assign(updateTodo, value);
+    return updateTodo;
+  }
+
+  getAllTodos(): Todo[] {
+    return this.todoUser.todos;
+  }
+
+  toggleTodoComplete(todo: Todo): Todo {
+    let updateTodo = this.updateTodoById(todo, {
+      complete: !todo.complete
+    });
+    this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`).update(this.todoUser);
+    return updateTodo;
   }
 
 }

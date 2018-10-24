@@ -15,7 +15,7 @@
     <h1 class="text-center text--white">My Todos</h1>
     <ul class="list-group task-container">
       <li class="list-group-item">
-        <form action="" style="margin-bottom:0;" (ngSubmit)="addTodo()">
+        <form action="" style="margin-bottom:0;" (ngSubmit)="addTodoForUser()">
           <div class="input-group">
             <label for="taskinput" class="sr-only">Task Title</label>
             <input type="text" class="form-control" name="taskinput" id="taskinput" placeholder="Create Some Tasks ..."
@@ -40,7 +40,7 @@
         <li class="list-group-item task task-transition" @onOffTaskTransition [class.task-complete]="todo.complete"
           *ngIf="!todo.complete">
           <input type="checkbox" [checked]="todo.complete" (click)="toggleTodoComplete(todo)">
-          {{capitalize(todo.title)}}
+          {{todo.title}}
           <button class="btn btn-danger pull-right btn-xs btn-circle" (click)="removeTodo(todo)"><span class="fa fa-trash-o"></span></button>
         </li>
       </ng-container>
