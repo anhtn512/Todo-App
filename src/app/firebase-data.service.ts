@@ -26,6 +26,18 @@ export class FirebaseDataService {
         if (user) {
           this.userDetails = user;
           console.log(this.userDetails);
+          this.afs.collection('todoapp', ref => ref.where('email', '==', this.userDetails.email)).snapshotChanges().subscribe(
+            res => {
+              if (!(res.length > 0)) {
+                const newUser = this.afs.doc<TodoUser>(`todoapp/${this.userDetails.email}`);
+                const data: TodoUser = {
+                  email: this.userDetails.email,
+                  todos: []
+                };
+                newUser.set(data);
+              }
+            }
+          );
         } else {
           this.userDetails = null;
         }
@@ -58,12 +70,4 @@ export class FirebaseDataService {
     this._firebaseAuth.auth.signOut();
   }
 
-  updateNewUser(user) {
-    const newUser = this.afs.doc<TodoUser>(`todoapp/${user.email}`);
-    const data: TodoUser = {
-        email: user.email,
-        todos: []
-    };
-    return newUser.set(data);
-  }
 }
