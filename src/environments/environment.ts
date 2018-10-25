@@ -10,7 +10,7 @@ export const environment = {
     databaseURL: 'https://todoapp-6c597.firebaseio.com',
     projectId: 'todoapp-6c597',
     storageBucket: 'todoapp-6c597.appspot.com',
-    messagingSenderId: 'A'
+    messagingSenderId: '557563713358'
   }
 };
 
