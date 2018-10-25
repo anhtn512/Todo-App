@@ -23,6 +23,7 @@ export class FirebaseDataService {
     this.user.subscribe(
       (user) => {
         if (user) {
+          this.setKeepSession();
           this.userDetails = user;
           console.log(this.userDetails);
           this.afs.collection('todoapp', ref => ref.where('uid', '==', this.userDetails.uid)).snapshotChanges().subscribe(
@@ -55,6 +56,18 @@ export class FirebaseDataService {
         this.todoUser = updateTodoUser;
       }
     );
+  }
+
+  setKeepSession() {
+    localStorage.setItem('auth', 'true');
+  }
+
+  uhsetKeepSession() {
+    localStorage.removeItem('auth');
+  }
+
+  checkKeepSession() {
+    let check = (localStorage.getItem('auth') === 'true');
   }
 
   signInWithGoogle() {
