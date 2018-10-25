@@ -67,7 +67,7 @@ export class FirebaseDataService {
   }
 
   checkKeepSession() {
-    let check = (localStorage.getItem('auth') === 'true');
+    return (localStorage.getItem('auth') === 'true');
   }
 
   signInWithGoogle() {
@@ -84,6 +84,7 @@ export class FirebaseDataService {
     }
   }
   logout() {
+    this.uhsetKeepSession();
     this._firebaseAuth.auth.signOut();
   }
 
