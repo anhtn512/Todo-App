@@ -15,7 +15,7 @@ import { TodoUser } from './todouser';
 export class FirebaseDataService {
 
   private user: Observable<firebase.User>;
-  userDetails: firebase.User = null;
+  private userDetails: firebase.User = null;
   todoUserObs: Observable<TodoUser>;
   todoUser: TodoUser;
   constructor(private _firebaseAuth: AngularFireAuth, private afs: AngularFirestore) {

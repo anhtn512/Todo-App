@@ -16,13 +16,35 @@ html{
 	padding-top: 100px;
 	min-height: 100vh;
 	min-width: 100vh;
+	position:relative;
 	/* background: linear-gradient(to bottom, #455EFE 40%,#3849AC 40%); */
-  }
+	}
+	body::after{ content:''; display:block; height:100px; }
 
 .lock {
 	width:40%;
 	margin: 1.5em auto 4em auto;
 	display:block;
+}
+
+.footer {
+	position:absolute; 
+  bottom:0; 
+	width:100%; 
+	height:100px; 
+	background-color: #2a2730;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: left;
+	color: #99979c;
+}
+
+footer a {
+	color: #fff;
+}
+
+footer .fa-heart {
+	color: #ff005e;
 }
 
 h1, h2, h3, h4, h5, h6 {

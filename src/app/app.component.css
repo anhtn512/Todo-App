@@ -10,6 +10,28 @@
   margin-right: auto;
   }
 
+.photoUser {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photoUser a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photoUser a img {
+  width:10%;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  margin: auto;
+}
+
 /*LIST TASKS  */
 
 ul.task-container{
