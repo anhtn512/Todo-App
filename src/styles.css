@@ -5,26 +5,26 @@ body {
 	-o-background-size: cover;
 	background-size: cover;
 }
+
 button.btn.btn-md.center {
 	display: block;
 	margin: 0 auto;
 }
 html{
 	background-color: #fff;
-  }
-  body{
+}
+
+body{
 	padding-top: 100px;
 	min-height: 100vh;
 	min-width: 100vh;
 	position:relative;
-	/* background: linear-gradient(to bottom, #455EFE 40%,#3849AC 40%); */
-	}
-	body::after{ content:''; display:block; height:100px; }
+}
 
-.lock {
-	width:40%;
-	margin: 1.5em auto 4em auto;
-	display:block;
+body::after{ 
+	content:''; 
+	display:block; 
+	height:100px; 
 }
 
 .footer {
