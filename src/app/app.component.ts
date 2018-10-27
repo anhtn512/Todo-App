@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   newTodo: Todo = <Todo>{title: '', complete: false};
   todoUser: TodoUser;
 
-  constructor(private firebaseDataServie: FirebaseDataService,
+  constructor(public firebaseDataServie: FirebaseDataService,
               private toastr: ToastrService) {  }
 
   ngOnInit() {
